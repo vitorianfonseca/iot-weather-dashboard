@@ -3,6 +3,13 @@
 document.addEventListener('click', (e) => {
   const { metrics, lastWeatherData } = window.config
 
+  handleMetricNavigation(e, metrics, lastWeatherData)
+  handleForecastButtons(e)
+  handleOverviewToggle(e, lastWeatherData)
+  handleForecastToggle(e)
+})
+
+function handleMetricNavigation(e, metrics, lastWeatherData) {
   if (e.target.id === 'metric-prev') {
     window.config.metricIndex = (window.config.metricIndex - 1 + metrics.length) % metrics.length
     document.getElementById('weatherMetric').textContent = metrics[window.config.metricIndex]
@@ -14,15 +21,15 @@ document.addEventListener('click', (e) => {
     document.getElementById('weatherMetric').textContent = metrics[window.config.metricIndex]
     if (lastWeatherData) updateMainCardValue(lastWeatherData)
   }
+}
 
-  if (e.target.id === 'btn-daily') {
+function handleForecastButtons(e) {
+  if (e.target.id === 'btn-daily' || e.target.id === 'btn-weekly') {
     updateForecastView(7)
   }
+}
 
-  if (e.target.id === 'btn-weekly') {
-    updateForecastView(7)
-  }
-
+function handleOverviewToggle(e, lastWeatherData) {
   if (e.target.closest('#overviewToggleBtn')) {
     const label = document.getElementById('overviewToggleLabel')
     const current = label.textContent.trim()
@@ -30,7 +37,9 @@ document.addEventListener('click', (e) => {
     label.textContent = current === 'Daily' ? 'Weekly' : 'Daily'
     if (lastWeatherData) updateOverviewCards(lastWeatherData)
   }
+}
 
+function handleForecastToggle(e) {
   if (e.target.closest('#overviewToggle')) {
     const label = document.getElementById('forecastToggleLabel')
     const current = label.textContent.trim()
@@ -43,7 +52,7 @@ document.addEventListener('click', (e) => {
       label.textContent = 'This week'
     }
   }
-})
+}
 
 document.addEventListener('input', async (e) => {
   const { apiKey } = window.config
