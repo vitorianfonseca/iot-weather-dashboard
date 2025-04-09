@@ -1,0 +1,703 @@
+/* ============================================
+   💠 GLOBAL RESET & FONTS
+============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
+:root {
+  --main-font: 'DM Sans', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: #fff;
+}
+
+body {
+  background-color: #e5e5e5;
+  font-family: var(--main-font);
+  overflow: hidden;
+  margin: 0;
+}
+
+body > .d-flex {
+  min-height: 100vh;
+}
+
+/* ============================================
+   📦 SIDEBAR (Desktop & Tablet)
+============================================ */
+
+.sidebar {
+  height: 100vh;
+  width: 16.75rem;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1.5rem;
+  border-right: 1px solid #eee;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+.sidebar a {
+  font-weight: 500;
+  color: #0d1b2a;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+  width: 13.5rem;
+}
+
+.sidebar a.active,
+.sidebar a:hover {
+  background-color: #f1f5ff;
+  color: #6a9cff;
+  border-radius: 0.5rem;
+}
+
+.sidebar a i {
+  margin-right: 0.5rem;
+}
+
+.sidebar .logo img {
+  max-width: 100%;
+  height: auto;
+}
+
+.logout {
+  margin-top: auto;
+}
+
+/* ============================================
+   🔝 HEADER
+============================================ */
+
+header {
+  padding: 1rem 2rem;
+}
+
+.main-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #fff;
+  border-bottom: 1px solid #e5eaf2;
+}
+
+header h5 {
+  color: #0d2646;
+  font-family: var(--main-font);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 140%;
+}
+
+header small {
+  color: #8c8fa5;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 130%;
+  opacity: 0.4;
+  margin-left: 0.1rem;
+  margin-top: 0.45rem;
+}
+
+.form-control {
+  border-radius: 0.75rem;
+  background: #fafafa;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0.65rem;
+}
+
+/* ============================================
+   📱 OFFCANVAS (Mobile Sidebar)
+============================================ */
+
+.offcanvas.offcanvas-start {
+  background-color: #ffffff;
+  padding: 1.5rem;
+}
+
+.offcanvas .offcanvas-title {
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: #0d2646;
+}
+
+.offcanvas .nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #0d1b2a;
+  padding: 0.75rem 0;
+  transition: all 0.2s ease-in-out;
+}
+
+.offcanvas .nav-link:hover,
+.offcanvas .nav-link.active {
+  color: #3b82f6;
+  background-color: #f1f5ff;
+  border-radius: 0.5rem;
+}
+
+.offcanvas .nav-link i {
+  font-size: 1.1rem;
+}
+
+.offcanvas .logo img {
+  max-width: 70%;
+  height: auto;
+}
+
+.offcanvas .logout {
+  margin-top: auto;
+  padding-top: 2rem;
+  border-top: 1px solid #eee;
+}
+
+.offcanvas .logout small {
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+.offcanvas .logout .nav-link {
+  color: #dc3545;
+  font-weight: 500;
+}
+
+/* ============================================
+   🌤️ MAIN CONTENT & WEATHER CARD
+============================================ */
+
+.app {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Push .main-content to the right of sidebar only on desktop */
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  padding-left: 0; /* default for mobile */
+}
+
+.main-content {
+  /* This is the key: just shift the whole block right */
+  display: flex;
+  flex-direction: column;
+  margin-left: 15.65rem;
+  height: 100vh;
+}
+
+main {
+  flex-grow: 1;
+  overflow-y: auto;
+  background: #fff;
+  padding: 2rem;
+}
+
+.weather-card {
+  background-color: #f5f8fc;
+  border-radius: 16px;
+  height: 100%;
+  padding: 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.weather-card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* <-- ESSENCIAL */
+}
+
+.weather-card-location,
+.weather-card-date,
+.weather-card-status {
+  color: #0d2646;
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
+.weather-card-location {
+  color: #6a9cff;
+}
+
+.weather-card h1 {
+  font-size: 4.5rem;
+  font-weight: 700;
+  color: #0d2646;
+}
+
+.weather-card-info-left {
+  margin-left: 3rem;
+}
+.weather-card-info-right img {
+  margin-left: -1rem;
+}
+
+.weather-card button {
+  background: #fff;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.weather-icon {
+  transition: transform 0.2s ease;
+}
+
+/* Ícones que parecem visualmente mais baixos (levantamos um pouco) */
+.icon-lifted {
+  transform: translateY(-8px);
+}
+
+/* Ícones que parecem visualmente mais altos (baixamos) */
+.icon-lowered {
+  transform: translateY(4px);
+}
+
+/* Outros ficam no centro padrão */
+.icon-normal {
+  transform: translateY(0);
+}
+
+.weather-card-info-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.weather-card-info-right img {
+  object-fit: contain;
+}
+
+/* 🔧 Correções específicas por tipo de ícone */
+.weather-icon.icon-lifted {
+  transform: translateY(-12px);
+}
+
+.weather-icon.icon-lowered {
+  transform: translateY(10px);
+}
+
+.weather-icon.icon-normal {
+  transform: translateY(0);
+}
+
+/* ============================================
+   📊 METRIC CARDS
+============================================ */
+
+.weather-overview-info {
+  margin-bottom: 1rem;
+}
+
+.weather-overview {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.weather-overview h5 {
+  color: #0d2646;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.weather-overview button {
+  background: #fafafa;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+.card-metric-overview {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: 100%;
+  padding: 1.25rem;
+  border: 1px solid #e8edf2;
+  border-radius: 1rem;
+  background: #fff;
+}
+
+.card-metric-left-overview {
+  width: 3.75rem;
+  height: 3.75rem;
+  background-color: #fafafa;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-metric-right-overview {
+  margin-left: 1rem;
+}
+
+.card-metric-overview .label {
+  color: #8c8fa5;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 130%;
+}
+
+.card-metric-overview .value {
+  color: #0d2646;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 130%;
+}
+
+.card-metric-overview:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+/* ============================================
+   📅 FORECAST SECTION
+============================================ */
+
+.weather-prediction-info {
+  margin-bottom: 1rem;
+  margin-top: 2.25rem;
+}
+
+.weather-prediction {
+  display: flex;
+}
+
+.weather-prediction-info h5 {
+  color: #0d2646;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.weather-prediction-info button {
+  background: #fafafa;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+.card-metric-prediction {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: 100%;
+  padding: 1rem 1rem;
+  border: 1px solid #e8edf2;
+  border-radius: 1rem;
+  background: #fff;
+}
+
+.card-metric-left-prediction {
+  padding: 1rem;
+  background-color: #fafafa;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-metric-right-prediction {
+  margin-left: 1rem;
+}
+
+.card-metric-prediction .label {
+  color: #8c8fa5;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 130%;
+}
+
+.card-metric-prediction .value {
+  color: #0d2646;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 130%;
+}
+
+.card-metric-prediction:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+/* ============================================
+   📈 CHARTS & CONTROLS
+============================================ */
+
+.btn.rounded-pill {
+  background-color: #f7f9fc;
+  border: 1px solid #e4ebf2;
+  font-weight: 500;
+}
+
+.btn.rounded-pill:hover {
+  background-color: #eef2f7;
+}
+
+section.bg-white {
+  border: 1px solid #e4ebf2;
+  border-radius: 16px;
+}
+
+section.bg-white h6 {
+  font-weight: 600;
+}
+
+/* ============================================
+   📱 RESPONSIVE BEHAVIOR
+============================================ */
+
+@media (max-width: 1042px) {
+  .header-weather-card {
+    flex-direction: column;
+  }
+  .weather-card-date {
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 1423px) {
+  .card-metric {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.25rem;
+    border: 1px solid #e8edf2;
+    border-radius: 1rem;
+    background: #fff;
+    text-align: center;
+    height: 100%;
+    min-height: 120px;
+  }
+
+  .card-metric-left {
+    width: 3.5rem;
+    height: 3.5rem;
+    background-color: #f0f4ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-metric-right {
+    margin: 0;
+  }
+}
+
+/* Mobile Header adjustments */
+@media (max-width: 991.98px) {
+  .sidebar {
+    display: none;
+  }
+
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .mobile-header-search {
+    display: flex;
+    flex-grow: 1;
+  }
+
+  .weather-top > div {
+    height: auto !important;
+  }
+
+  .header-weather-card {
+    flex-direction: row;
+  }
+  .weather-card-date {
+    margin-top: 0rem;
+  }
+}
+
+/* Header collapse under 475px */
+@media (max-width: 475px) {
+  .mobile-header {
+    flex-direction: column;
+  }
+
+  .main-header .header-actions input.form-control {
+    margin-bottom: 0.5rem;
+  }
+
+  .main-header .header-actions button {
+    align-self: flex-start;
+  }
+}
+
+/* Tablet sidebar: only icons */
+@media (max-width: 991.98px) and (min-width: 768px) {
+  .sidebar {
+    width: 80px;
+    padding: 1rem 0.5rem;
+    align-items: center;
+  }
+
+  .sidebar .nav-link,
+  .sidebar .logout .nav-link {
+    width: 100%;
+    justify-content: center;
+    padding: 0.5rem 0;
+  }
+
+  .sidebar .nav-link span,
+  .sidebar .logout small,
+  .sidebar .logout span {
+    display: none !important;
+  }
+
+  .sidebar .logo img {
+    width: 40px;
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+  }
+}
+
+/* Font scaling for small screens */
+@media (max-width: 768px) {
+  header h5 {
+    font-size: 1.25rem;
+  }
+
+  header small {
+    font-size: 0.85rem;
+  }
+
+  .weather-card h1 {
+    font-size: 3rem;
+  }
+
+  .weather-card-status,
+  .weather-card-location,
+  .weather-card-date,
+  .card-metric .label {
+    font-size: 1rem;
+  }
+
+  .card-metric .value {
+    font-size: 1.5rem;
+  }
+
+  .weather-overview h5 {
+    font-size: 1.25rem;
+  }
+
+  .form-control {
+    font-size: 0.9rem;
+  }
+
+  .weather-overview {
+    margin-top: 1rem;
+  }
+
+  .card-metric .value {
+    font-size: 1.75rem;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+
+  .card-metric .value small {
+    font-size: 0.875rem;
+    color: #8c8fa5;
+    font-weight: 400;
+  }
+
+  .card-metric {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 1.25rem 0.75rem;
+  }
+
+  .card-metric-left {
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-metric-right {
+    margin-left: 0;
+  }
+
+  #overviewToggle {
+    width: auto;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .weather-overview h5 {
+    font-size: 1rem;
+  }
+
+  .weather-overview button {
+    margin-right: 2rem;
+  }
+}
+
+/* ============================================
+   🔍 EXTRAS
+============================================ */
+
+#suggestions {
+  max-height: 200px;
+  overflow-y: auto;
+  background: white;
+  border-radius: 0.5rem;
+}
+
+#weatherIcon {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.weather-prediction {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem; /* <= controla o espaço horizontal e vertical */
+  padding-bottom: 10px;
+}
+
+/* Em mobile: scroll horizontal */
+@media (max-width: 768px) {
+  .weather-prediction {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    gap: 0.75rem; /* ainda pode reduzir ligeiramente em mobile se quiseres */
+  }
+
+  .card-metric-prediction {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+}

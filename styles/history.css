@@ -1,0 +1,66 @@
+/* Aplica estilos só na página de histórico */
+.history-page {
+  height: 100%;
+}
+
+/* Container dos cards */
+
+/* Card individual */
+.history-page .sensor-card {
+  background: #f5f8fc;
+  border-radius: 20px;
+  /* padding: 1.5rem; */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Imagem do ícone */
+
+/* Info do sensor */
+.history-page .card-body .info {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Badge */
+.history-page .card-body .info .badge-type {
+  margin-top: 4px;
+  font-size: 1rem;
+}
+
+/* Tabela de histórico */
+.history-page .table-responsive {
+  flex-grow: 1;
+  overflow-y: auto;
+  border-radius: 10px;
+}
+
+.sensor-title {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Scroll */
+.history-page .table-responsive::-webkit-scrollbar {
+  width: 6px;
+}
+.history-page .table-responsive::-webkit-scrollbar-thumb {
+  background: #cfd8dc;
+  border-radius: 10px;
+}
+
+/* Tabs */
+.history-page .nav-tabs .nav-link {
+  font-weight: 600;
+  color: #6c757d;
+  border: none;
+  border-bottom: 3px solid transparent;
+}
+
+.history-page .nav-tabs .nav-link.active {
+  color: #0d2646;
+  border-bottom-color: #6a9cff;
+  background-color: transparent;
+}

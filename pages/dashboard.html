@@ -1,0 +1,213 @@
+<!-- dashboard.html -->
+<div class="row weather-top">
+  <!-- Weather Card -->
+  <div class="col-lg-6 d-flex">
+    <section class="weather-card w-100 h-100 d-none">
+      <div class="d-flex justify-content-between header-weather-card">
+        <span class="d-flex align-items-center gap-2">
+          <img src="assets/icons/location.svg" width="18" alt="Location icon" />
+          <p class="weather-card-location">Surakarta</p>
+        </span>
+        <span class="weather-card-date" id="liveTime">Wed 07:03 PM</span>
+      </div>
+      <div class="d-flex align-items-center justify-content-center weather-card-info">
+        <div class="weather-card-info-left d-flex flex-column align-items-center">
+          <h1>24°</h1>
+          <p class="weather-card-status">Sunny</p>
+        </div>
+        <div class="weather-card-info-right">
+          <img id="weatherIcon" src="assets/weather/day.svg" width="150" alt="Weather Icon" />
+        </div>
+      </div>
+
+      <button class="d-flex justify-content-between align-items-center w-100">
+        <img id="metric-prev" src="assets/icons/arrow-left.svg" width="16" alt="Previous" />
+        <span class="mx-2 fw-medium" id="weatherMetric">Air temperature</span>
+        <img id="metric-next" src="assets/icons/arrow-right.svg" width="16" alt="Next" />
+      </button>
+    </section>
+  </div>
+
+  <!-- Overview -->
+  <div class="col-lg-6 d-flex">
+    <section class="weather-overview w-100 h-100">
+      <div class="weather-overview-info d-flex justify-content-between align-items-center">
+        <h5>Weather overview</h5>
+        <button
+          id="overviewToggleBtn"
+          class="d-flex justify-content-between align-items-center w-25"
+        >
+          <img src="assets/icons/arrow-left.svg" width="16" alt="Previous" />
+          <span class="mx-2 fw-medium" id="overviewToggleLabel">Daily</span>
+          <img src="assets/icons/arrow-right.svg" width="16" alt="Next" />
+        </button>
+      </div>
+      <div class="row g-4 weather-overview-grid">
+        <div class="col-6 col-md-6 col-xl-6">
+          <article class="card-metric-overview">
+            <div class="card-metric-left-overview">
+              <img src="assets/overview/wind.svg" width="28" alt="Rain Chance" />
+            </div>
+            <div class="card-metric-right-overview">
+              <p class="label">Wind Speed</p>
+              <p class="value">12 km/h</p>
+            </div>
+          </article>
+        </div>
+        <div class="col-6 col-md-6 col-xl-6">
+          <article class="card-metric-overview">
+            <div class="card-metric-left-overview">
+              <img src="assets/overview/rain.svg" width="28" alt="Rain Chance" />
+            </div>
+            <div class="card-metric-right-overview">
+              <p class="label">Rain Chance</p>
+              <p class="value">24%</p>
+            </div>
+          </article>
+        </div>
+        <div class="col-6 col-md-6 col-xl-6">
+          <article class="card-metric-overview">
+            <div class="card-metric-left-overview">
+              <img src="assets/overview/wind-2.svg" width="28" alt="Pressure" />
+            </div>
+            <div class="card-metric-right-overview">
+              <p class="label">Pressure</p>
+              <p class="value">720 hpa</p>
+            </div>
+          </article>
+        </div>
+        <div class="col-6 col-md-6 col-xl-6">
+          <article class="card-metric-overview">
+            <div class="card-metric-left-overview">
+              <img src="assets/overview/sun-fog.svg" width="22" alt="Sunset" />
+            </div>
+            <div class="card-metric-right-overview">
+              <p class="label">Sunset</p>
+              <p class="value">--</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- prediction-->
+  <!-- <div class="col-lg-12">
+    <div class="weather-prediction-info d-flex justify-content-between align-items-center">
+      <h5>Weather forecast</h5>
+      <button id="overviewToggle" class="d-flex justify-content-between align-items-center w-25">
+        <img src="assets/icons/arrow-left.svg" width="16" alt="Previous" />
+        <span class="mx-2 fw-medium" id="forecastToggleLabel">This week</span>
+        <img src="assets/icons/arrow-right.svg" width="16" alt="Next" />
+      </button>
+    </div>
+    <section class="weather-prediction w-100 d-flex">
+      <article class="card-metric-prediction">
+        <div class="card-metric-left-prediction">
+          <img src="assets/overview/sun.svg" width="22" alt="Sun" />
+        </div>
+        <div class="card-metric-right-prediction">
+          <p class="label">Sun</p>
+          <p class="value">24º</p>
+        </div>
+      </article>
+
+      <article class="card-metric-prediction">
+        <div class="card-metric-left-prediction">
+          <img src="assets/overview/sun.svg" width="22" alt="Sun" />
+        </div>
+        <div class="card-metric-right-prediction">
+          <p class="label">Sun</p>
+          <p class="value">24º</p>
+        </div>
+      </article>
+
+      <article class="card-metric-prediction">
+        <div class="card-metric-left-prediction">
+          <img src="assets/overview/sun.svg" width="22" alt="Sun" />
+        </div>
+        <div class="card-metric-right-prediction">
+          <p class="label">Sun</p>
+          <p class="value">24º</p>
+        </div>
+      </article>
+
+      <article class="card-metric-prediction">
+        <div class="card-metric-left-prediction">
+          <img src="assets/overview/sun.svg" width="22" alt="Sun" />
+        </div>
+        <div class="card-metric-right-prediction">
+          <p class="label">Sun</p>
+          <p class="value">24º</p>
+        </div>
+      </article>
+
+      <article class="card-metric-prediction">
+        <div class="card-metric-left-prediction">
+          <img src="assets/overview/sun.svg" width="22" alt="Sun" />
+        </div>
+        <div class="card-metric-right-prediction">
+          <p class="label">Sun</p>
+          <p class="value">24º</p>
+        </div>
+      </article>
+
+      <article class="card-metric-prediction">
+        <div class="card-metric-left-prediction">
+          <img src="assets/overview/sun.svg" width="22" alt="Sun" />
+        </div>
+        <div class="card-metric-right-prediction">
+          <p class="label">Sun</p>
+          <p class="value">24º</p>
+        </div>
+      </article>
+
+      <article class="card-metric-prediction">
+        <div class="card-metric-left-prediction">
+          <img src="assets/overview/sun.svg" width="22" alt="Sun" />
+        </div>
+        <div class="card-metric-right-prediction">
+          <p class="label">Sun</p>
+          <p class="value">24º</p>
+        </div>
+      </article>
+    </section>
+  </div> -->
+  <!-- CHARTS -->
+  <div class="row g-4 mt-3">
+    <div class="col-lg-6 col-12">
+      <div class="p-3 rounded-4 shadow-sm border" style="background-color: #fff">
+        <h6 class="mb-3">Average Weekly Temperature</h6>
+        <canvas id="weeklyTemperatureChart" height="200"></canvas>
+      </div>
+    </div>
+    <div class="col-lg-6 col-12">
+      <div class="p-3 rounded-4 shadow-sm border" style="background-color: #fff">
+        <h6 class="mb-3">Average Daily Rainfall</h6>
+        <canvas id="dailyRainfallChart" height="200"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/config.js"></script>
+
+<!-- Core -->
+<script src="js/core/api.js"></script>
+<script src="js/core/geolocation.js"></script>
+<script src="js/core/forecast.js"></script>
+
+<!-- UI -->
+<script src="js/ui/mainCard.js"></script>
+<script src="js/ui/overview.js"></script>
+<script src="js/ui/weatherImage.js"></script>
+<script src="js/ui/weatherUI.js"></script>
+
+<!-- Events -->
+<script src="js/events/listeners.js"></script>
+
+<!-- Charts -->
+<script src="js/charts/charts.js"></script>
+
+<!-- Init -->
+<script src="js/app.js"></script>

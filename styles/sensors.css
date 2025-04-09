@@ -1,0 +1,122 @@
+section {
+  font-family: 'DM Sans', sans-serif;
+}
+
+h4 {
+  font-size: 2rem;
+}
+
+.sensor-card {
+  background: #f5f8fc;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.sensor-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.card-title {
+  font-weight: 600;
+  font-size: 1.3rem;
+}
+
+.badge-type {
+  font-size: 1rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 500;
+}
+
+.value {
+  color: #0d2646;
+}
+
+.badge-type.sensor {
+  background-color: #e9f3ff;
+  color: #007bff;
+}
+
+.badge-type.actuator {
+  background-color: #eafaf1;
+  color: #1d8348;
+}
+
+.card-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  gap: 1.5rem;
+}
+
+.card-body .icon {
+  width: 5rem;
+  height: auto;
+}
+
+.card-body .info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.card-body .value {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.card-body .subtext {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  margin-top: 1rem;
+}
+
+.history-link {
+  font-size: 13px;
+  color: #2563eb;
+  text-decoration: none;
+  opacity: 0.5;
+}
+
+small {
+  opacity: 0.5;
+}
+
+.history-link:hover {
+  color: #2563eb;
+  opacity: 1;
+}
+.card {
+  border: 1px solid #e8edf2;
+}
+
+.custom-table {
+  border-collapse: separate !important;
+  border-spacing: 0 20px !important; /* Aumenta o espaçamento entre as linhas */
+}
+
+td,
+th {
+  padding: 10px 20px !important; /* Ajuste do padding das células */
+}
