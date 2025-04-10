@@ -328,6 +328,49 @@ main {
   padding: 1rem;
 }
 
+.charts {
+  margin-bottom: 1rem;
+}
+
+.charts button {
+  background: #fafafa !important;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.5rem 1rem;
+  color: #0d2646;
+  font-size: 0.95rem;
+  font-weight: 500;
+  gap: 0.5rem;
+}
+
+.charts .col-lg-6 {
+  display: flex;
+}
+
+.charts .col-lg-6 > div {
+  width: 100%;
+}
+
+#refreshChartsBtn {
+  background: #fafafa;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.5rem 1.25rem;
+  color: #0d2646;
+  font-size: 0.95rem;
+  font-weight: 500;
+  gap: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+#refreshChartsBtn:hover {
+  background: #e0ecff;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
 .card-metric-overview {
   display: flex;
   align-items: center;

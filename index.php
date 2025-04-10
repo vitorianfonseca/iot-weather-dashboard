@@ -11,7 +11,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="refresh" content="30">
     <title>SkyCast</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
@@ -69,17 +68,6 @@
               >
                 <i class="bi bi-map fs-5 mb-1 mb-lg-0"></i>
                 <span class="d-none d-lg-inline ms-lg-2">History</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a
-                id="link-contact"
-                data-page="contact.html"
-                class="nav-link d-flex flex-column flex-lg-row align-items-center <?= $page === 'contact' ? 'active' : '' ?>"
-                href="index.php?page=contact"
-              >
-                <i class="bi bi-calendar-event fs-5 mb-1 mb-lg-0"></i>
-                <span class="d-none d-lg-inline ms-lg-2">Contact</span>
               </a>
             </li>
           </ul>
@@ -218,9 +206,6 @@
               <button class="btn bg-light rounded-3 p-2">
                 <i class="bi bi-bell text-muted fs-6 fs-md-5"></i>
               </button>
-              <button class="btn bg-light rounded-3 p-2">
-                <i class="bi bi-person text-muted fs-6 fs-md-5"></i>
-              </button>
             </div>
           </div>
         </header>
@@ -238,6 +223,5 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
   </body>
 </html>

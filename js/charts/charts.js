@@ -1,19 +1,29 @@
-// weather-charts.js
-document.addEventListener('DOMContentLoaded', function () {
-  // Weekly Temperature Chart
-  new Chart(document.getElementById('weeklyTemperatureChart'), {
+let tempChart = null
+let rainChart = null
+
+function drawChartsFromData(dailyData) {
+  const labels = dailyData.map((day) =>
+    new Date(day.dt * 1000).toLocaleDateString('en-US', { weekday: 'short' })
+  )
+  const temperatures = dailyData.map((day) => day.temp.day)
+  const rainVolumes = dailyData.map((day) => day.rain || 0)
+
+  if (tempChart) tempChart.destroy()
+  if (rainChart) rainChart.destroy()
+
+  tempChart = new Chart(document.getElementById('weeklyTemperatureChart'), {
     type: 'line',
     data: {
-      labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+      labels,
       datasets: [
         {
-          data: [30, 31, 15, 32],
+          data: temperatures,
           fill: false,
           tension: 0.4,
           borderColor: '#3b82f6',
           borderWidth: 2,
           pointBackgroundColor: ['#3b82f6', '#3b82f6', 'orange', '#3b82f6'],
-          pointRadius: [4, 4, 6, 4],
+          pointRadius: [4, 4, 6, 4, 4, 4, 4],
         },
       ],
     },
@@ -26,22 +36,21 @@ document.addEventListener('DOMContentLoaded', function () {
     },
   })
 
-  // Daily Rainfall Chart
-  new Chart(document.getElementById('dailyRainfallChart'), {
+  rainChart = new Chart(document.getElementById('dailyRainfallChart'), {
     type: 'bar',
     data: {
-      labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+      labels,
       datasets: [
         {
-          data: [10, 8, 9, 6, 5, 3, 2],
+          data: rainVolumes.map((v) => v * 0.4),
           backgroundColor: '#c7d2fe',
         },
         {
-          data: [7, 6, 5, 4, 3, 2, 1],
+          data: rainVolumes.map((v) => v * 0.35),
           backgroundColor: '#818cf8',
         },
         {
-          data: [4, 3, 2, 1, 1, 1, 1],
+          data: rainVolumes.map((v) => v * 0.25),
           backgroundColor: '#1e3a8a',
         },
       ],
@@ -54,4 +63,32 @@ document.addEventListener('DOMContentLoaded', function () {
       },
     },
   })
+}
+
+async function drawWeatherCharts() {
+  const coords = window.config.currentCoords
+  const dailyData = await window.fetchDailyForecast(coords.lat, coords.lon)
+  if (!dailyData) return
+
+  localStorage.setItem('cachedChartsData', JSON.stringify(dailyData))
+  drawChartsFromData(dailyData)
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const cached = localStorage.getItem('cachedChartsData')
+  if (cached) {
+    try {
+      const parsed = JSON.parse(cached)
+      drawChartsFromData(parsed)
+    } catch (e) {
+      console.warn('Erro ao restaurar gráfico do localStorage:', e)
+    }
+  }
+
+  const refreshBtn = document.getElementById('refreshChartsBtn')
+  if (refreshBtn) {
+    refreshBtn.addEventListener('click', () => {
+      drawWeatherCharts()
+    })
+  }
 })

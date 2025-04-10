@@ -1,112 +1,113 @@
 <?php
-$sensores = [
-  'temperatura' => ['label' => 'Temperatura', 'icon' => 'high-temperature 1.svg'],
-  'vento' => ['label' => 'Velocidade do Vento', 'icon' => 'fan 1.svg'],
-  'uv' => ['label' => 'Índice UV', 'icon' => 'uv 1.svg']
+// Sensores e atuadores
+$dispositivos = [
+  'temperatura' => ['tipo' => 'Sensor', 'icon' => 'high-temperature 1.svg'],
+  'humidade' => ['tipo' => 'Sensor', 'icon' => 'humidity 1.svg'],
+  'uv' => ['tipo' => 'Sensor', 'icon' => 'uv 1.svg'],
+  'vento' => ['tipo' => 'Sensor', 'icon' => 'fan 1.svg'],
+  'led' => ['tipo' => 'Atuador', 'icon' => 'led-light 1.svg'],
+  'servo' => ['tipo' => 'Atuador', 'icon' => 'servo 1.svg'],
+  'buzzer' => ['tipo' => 'Atuador', 'icon' => 'alarm 1.svg'],
 ];
 
-$atuadores = [
-  'led' => ['label' => 'LED RGB', 'icon' => 'led-light 1.svg'],
-  'servo' => ['label' => 'Servo Motor', 'icon' => 'servo 1.svg'],
-  'buzzer' => ['label' => 'Buzzer', 'icon' => 'alarm 1.svg']
-];
+function gerarTabela($id, $tipo, $icon) {
+  $log_path = __DIR__ . "/../api/files/{$id}/log.txt";
+  if (!file_exists($log_path)) {
+    return "<tr><td colspan='5'>⚠️ Ficheiro não encontrado: {$id}</td></tr>";
+  }
 
-function lerLog($nome) {
-  $ficheiro = __DIR__ . "/api/files/$nome/log.txt";
-  $linhas = file_exists($ficheiro) ? file($ficheiro, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) : [];
-  return array_map(function($linha) {
-    $partes = explode(' - ', $linha);
-    return [
-      'hora' => $partes[0] ?? '---',
-      'valor' => $partes[1] ?? '---'
-    ];
-  }, $linhas);
+$linhas = array_reverse(file($log_path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES));
+  $html = '';
+
+  foreach ($linhas as $linha) {
+    $partes = explode(';', $linha);
+    if (count($partes) !== 2) continue;
+
+    [$hora, $valor] = array_map('trim', $partes);
+
+    $label = match($id) {
+      'temperatura' => '°C',
+      'humidade' => '%',
+      'vento' => 'km/h',
+      default => '',
+    };
+
+    // Estado
+    $estado = match($id) {
+      'temperatura' => ($valor > 40 ? 'Elevado' : ($valor > 20 ? 'Normal' : 'Baixo')),
+      'humidade' => ($valor > 80 ? 'Humido' : ($valor > 40 ? 'Normal' : 'Seco')),
+      'uv' => ($valor > 7 ? 'Elevado' : ($valor > 4 ? 'Moderado' : 'Baixo')),
+      'vento' => ($valor > 20 ? 'Forte' : 'Suave'),
+      'led' => ($valor == 'Ativo' ? 'Ativo' : 'Inativo'),
+      'servo' => ($valor == 'Proteção ativa' ? 'Ativo' : 'Inativo'),
+      'buzzer' => ($valor == 'Alerta ativo' ? 'Ativo' : 'Inativo'),
+      default => '',
+    };
+
+    $badge = match($estado) {
+      'Elevado', 'Humido', 'Inativo', 'Forte' => 'badge bg-danger-subtle text-danger-emphasis',
+      'Normal', 'Moderado', 'Ativo' => 'badge bg-success-subtle text-success-emphasis',
+      'Baixo', 'Seco', 'Suave' => 'badge bg-primary-subtle text-primary-emphasis',
+      default => '',
+    };
+
+    $html .= "<tr>
+      <td><div class='d-flex align-items-center gap-3'>
+        <img src='assets/sensors/{$icon}' alt='{$id}' width='32' />
+        <span>" . ucfirst($id) . "</span>
+      </div></td>
+      <td>{$tipo}</td>
+      <td>{$valor} {$label}</td>
+      <td>{$hora}</td>
+      <td><span class='{$badge}'>{$estado}</span></td>
+    </tr>";
+  }
+
+  return $html;
 }
 ?>
 
 <div class="history-page">
+  <div class="container my-5">
+    <h3 class="fw-bold mb-5">Histórico de sensores e atuadores</h3>
 
-<div class="container-fluid">
-  <h4 class="fw-bold mb-4">Histórico de Sensores e Atuadores</h4>
+    <!-- Tabs -->
+    <ul class="nav nav-tabs mb-4" role="tablist">
+      <?php $i = 0; foreach ($dispositivos as $id => $d): ?>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link <?= $i === 0 ? 'active' : '' ?>" id="tab-<?= $id ?>"
+            data-bs-toggle="tab" data-bs-target="#pane-<?= $id ?>"
+            type="button" role="tab">
+            <?= ucfirst($id) ?>
+          </button>
+        </li>
+      <?php $i++; endforeach ?>
+    </ul>
 
-  <!-- Tabs -->
-  <ul class="nav nav-tabs mb-4" id="historyTab" role="tablist">
-    <li class="nav-item" role="presentation">
-      <button class="nav-link active" id="tab-sensores" data-bs-toggle="tab" data-bs-target="#sensores" type="button" role="tab">Sensores</button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" id="tab-atuadores" data-bs-toggle="tab" data-bs-target="#atuadores" type="button" role="tab">Atuadores</button>
-    </li>
-  </ul>
-
-  <div class="tab-content" id="historyTabContent">
-    <!-- Sensores -->
-    <div class="tab-pane fade show active" id="sensores" role="tabpanel">
-      <div class="row">
-        <?php foreach ($sensores as $id => $dados): ?>
-          <div class="col-md-4 mb-4">
-            <div class="sensor-card card">
-              <div class="card-body d-flex align-items-center gap-3 mb-3">
-                <img src="assets/sensors/<?= $dados['icon'] ?>" alt="<?= $dados['label'] ?>" class="icon">
-                <div class="info">
-                  <div class="fw-bold sensor-title"><?= $dados['label'] ?></div>
-                  <span class="badge-type sensor">Sensor</span>
-                </div>
-              </div>
-              <div class="table-responsive">
-                <table class="table custom-table">
-                  <thead>
-                    <tr><th>Hora</th><th>Valor</th></tr>
-                  </thead>
-                  <tbody>
-                    <?php foreach (lerLog($id) as $linha): ?>
-                      <tr>
-                        <td><?= htmlspecialchars($linha['hora']) ?></td>
-                        <td><?= htmlspecialchars($linha['valor']) ?></td>
-                      </tr>
-                    <?php endforeach ?>
-                  </tbody>
-                </table>
-              </div>
+    <!-- Tab Contents -->
+    <div class="tab-content">
+      <?php $i = 0; foreach ($dispositivos as $id => $d): ?>
+        <div class="tab-pane fade <?= $i === 0 ? 'show active' : '' ?>" id="pane-<?= $id ?>" role="tabpanel">
+          <div class="card p-3 rounded-4 shadow-sm">
+            <div class="table-responsive">
+              <table class="table align-middle custom-table mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Dispositivo</th>
+                    <th>Tipo</th>
+                    <th>Valor</th>
+                    <th>Atualização</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?= gerarTabela($id, $d['tipo'], $d['icon']) ?>
+                </tbody>
+              </table>
             </div>
           </div>
-        <?php endforeach ?>
-      </div>
-    </div>
-
-    <!-- Atuadores -->
-    <div class="tab-pane fade" id="atuadores" role="tabpanel">
-      <div class="row">
-        <?php foreach ($atuadores as $id => $dados): ?>
-          <div class="col-md-4 mb-4">
-            <div class="sensor-card card">
-              <div class="card-body d-flex align-items-center gap-3 mb-3">
-                <img src="assets/sensors/<?= $dados['icon'] ?>" alt="<?= $dados['label'] ?>" class="icon">
-                <div class="info">
-                  <div class="fw-bold"><?= $dados['label'] ?></div>
-                  <span class="badge-type actuator">Atuador</span>
-                </div>
-              </div>
-              <div class="table-responsive">
-                <table class="table custom-table">
-                  <thead>
-                    <tr><th>Hora</th><th>Valor</th></tr>
-                  </thead>
-                  <tbody>
-                    <?php foreach (lerLog($id) as $linha): ?>
-                      <tr>
-                        <td><?= htmlspecialchars($linha['hora']) ?></td>
-                        <td><?= htmlspecialchars($linha['valor']) ?></td>
-                      </tr>
-                    <?php endforeach ?>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        <?php endforeach ?>
-      </div>
+        </div>
+      <?php $i++; endforeach ?>
     </div>
   </div>
-</div>
 </div>

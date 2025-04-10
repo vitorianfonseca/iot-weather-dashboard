@@ -105,15 +105,7 @@
           <img src="assets/sensors/servo 1.svg" alt="Servo" class="icon" />
           <div class="info">
             <div class="value">
-              <?php 
-                if ($valor_servo == "0") {
-                  echo "Proteção ativa";
-                } elseif ($valor_servo == "1") {
-                  echo "Proteção inativa";
-                } else {
-                  echo "Erro";
-                }                
-              ?>
+              <?php echo $valor_servo?>
             </div>
             <div class="subtext">SG90</div>
           </div>
@@ -135,7 +127,9 @@
         <div class="card-body">
           <img src="assets/sensors/alarm 1.svg" alt="Buzzer" class="icon" />
           <div class="info">
-            <div class="value "><?php echo $valor_buzzer?></div>
+            <div class="value ">
+              <?php echo $valor_buzzer?>
+            </div>
             <div class="subtext">5V</div>
           </div>
         </div>

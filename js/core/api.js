@@ -8,6 +8,7 @@ window.config = window.config || {
   apiKey,
 }
 
+// Mantém a versão 2.5 para UI principal e overview
 window.fetchWeatherByCoords = async function (lat, lon) {
   const endpoint = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`
 
@@ -19,14 +20,13 @@ window.fetchWeatherByCoords = async function (lat, lon) {
   window.config.currentCoords = { lat, lon }
 
   updateWeatherUI(data)
+  updateOverviewCards(data)
 
   const forecastReady = await waitForElement('.weather-prediction')
   if (forecastReady && typeof updateForecastView === 'function') updateForecastView()
-
-  // Atualiza os cards laterais (inclui sunset agora)
-  updateOverviewCards(data)
 }
 
+// Geocodificação continua igual
 window.fetchCityCoordinates = async function (city) {
   const res = await fetch(
     `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`
@@ -38,9 +38,10 @@ window.fetchCityCoordinates = async function (city) {
   await fetchWeatherByCoords(lat, lon)
 }
 
+// Versão 3.0 só para os gráficos (daily forecast)
 window.fetchDailyForecast = async function (lat, lon) {
   try {
-    const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely,current,alerts&appid=${apiKey}&units=metric`
+    const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly,alerts&appid=${apiKey}&units=metric`
     const res = await fetch(url)
     const data = await res.json()
     return data.daily

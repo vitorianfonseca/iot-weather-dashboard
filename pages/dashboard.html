@@ -174,7 +174,13 @@
     </section>
   </div> -->
   <!-- CHARTS -->
-  <div class="row g-4 mt-3">
+  <div class="row charts">
+    <div class="d-flex justify-content-start mt-3 mb-3 px-3">
+      <button id="refreshChartsBtn" class="d-flex align-items-center refreshbttn">
+        <span>Atualizar Gráficos</span>
+      </button>
+    </div>
+
     <div class="col-lg-6 col-12">
       <div class="p-3 rounded-4 shadow-sm border" style="background-color: #fff">
         <h6 class="mb-3">Average Weekly Temperature</h6>
@@ -192,6 +198,9 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="js/config.js"></script>
 
+<!-- Charts -->
+<script src="js/charts/charts.js"></script>
+
 <!-- Core -->
 <script src="js/core/api.js"></script>
 <script src="js/core/geolocation.js"></script>
@@ -206,8 +215,11 @@
 <!-- Events -->
 <script src="js/events/listeners.js"></script>
 
-<!-- Charts -->
-<script src="js/charts/charts.js"></script>
-
 <!-- Init -->
 <script src="js/app.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // força uma atualização com as coordenadas padrão
+    fetchWeatherByCoords(window.config.currentCoords.lat, window.config.currentCoords.lon)
+  })
+</script>

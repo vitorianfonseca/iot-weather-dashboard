@@ -45,41 +45,43 @@ if (
     </script>
 </head>
 <body>
-    <div class="container">
-        <div class="left"></div>
-        <div class="right">
-            <h1>Welcome to SkyCast</h1>
-            <div class="form-wrapper">
-                <p class="subtitle"><b>Nice to see you again</b></p>
-                <?php if (isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
-                <form method="POST" action="">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" placeholder="Enter username" autocomplete="username" class="input" required  value="<?php echo $_COOKIE['remembered_user'] ?? ''; ?>" />
+    <div class="login">
+        <div class="container">
+            <div class="left"></div>
+            <div class="right">
+                <h1>Welcome to SkyCast</h1>
+                <div class="form-wrapper">
+                    <p class="subtitle"><b>Nice to see you again</b></p>
+                    <?php if (isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
+                    <form method="POST" action="">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="Enter username" autocomplete="username" class="input" required  value="<?php echo $_COOKIE['remembered_user'] ?? ''; ?>" />
 
-                    <label for="password">Password</label>
-                    <div class="password-wrapper">
-                        <input type="password" id="password" name="password" autocomplete="current-password" placeholder="Enter password" class="input" required />
-                        <span class="eye-icon" onclick="togglePassword()">
-                            <img id="eye-icon" src="../assets/login/hidden.svg" alt="Toggle password visibility">
-                        </span>
-                    </div>
+                        <label for="password">Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="password" name="password" autocomplete="current-password" placeholder="Enter password" class="input" required />
+                            <span class="eye-icon" onclick="togglePassword()">
+                                <img id="eye-icon" src="../assets/login/hidden.svg" alt="Toggle password visibility">
+                            </span>
+                        </div>
 
-                    <div class="options">
-                        <label class="remember-me">
-                            <label class="toggle-remember">
-                                <input type="checkbox" id="remember-me" name="remember" <?php if (isset($_COOKIE['remembered_user'])) echo 'checked'; ?>>
-                                <span class="slider"></span>
-                                <span class="label-text">Remember me</span>
+                        <div class="options">
+                            <label class="remember-me">
+                                <label class="toggle-remember">
+                                    <input type="checkbox" id="remember-me" name="remember" <?php if (isset($_COOKIE['remembered_user'])) echo 'checked'; ?>>
+                                    <span class="slider"></span>
+                                    <span class="label-text">Remember me</span>
+                                </label>
                             </label>
-                        </label>
-                        <a href="forgot.php" class="forgot">Forgot password?</a>
-                    </div>
+                            <a href="forgot.php" class="forgot">Forgot password?</a>
+                        </div>
 
-                    <button class="sign-in" type="submit">Sign in</button>
-                    <div class="logo">
-                        <img src="../assets/login/ipl.svg" alt="Politécnico de Leiria">
-                    </div>
-                </form>
+                        <button class="sign-in" type="submit">Sign in</button>
+                        <div class="logo">
+                            <img src="../assets/login/ipl.svg" alt="Politécnico de Leiria">
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

@@ -15,7 +15,10 @@
   flex-direction: column;
   overflow: hidden;
 }
-
+.history-page h3 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
 /* Imagem do ícone */
 
 /* Info do sensor */
