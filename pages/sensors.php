@@ -18,7 +18,7 @@
           <span class="badge-type sensor">Sensor</span>
         </div>
         <div class="card-body">
-          <img src="assets/sensors/high-temperature 1.svg" alt="Temperatura" class="icon" />
+          <img src="assets/sensors/high-temperature.svg" alt="Temperatura" class="icon" >
           <div class="info">
             <div class="value"><?php echo $valor_temperatura . " °C"; ?></div>
             <div class="subtext">BME280</div>
@@ -26,7 +26,7 @@
         </div>
         <div class="card-footer">
           <small class="text-muted">Atualização:&nbsp;<?php echo $hora_temperatura?></small>
-          <a href="#" class="history-link">Ver histórico</a>
+          <a href="index.php?page=history&sensor=temperatura" class="history-link">Ver histórico</a>
         </div>
       </div>
     </div>
@@ -35,19 +35,19 @@
     <div class="col-md-4">
       <div class="sensor-card">
         <div class="card-header">
-          <span class="card-title">Velocidade do Vento</span>
+          <span class="card-title">Humidade</span>
           <span class="badge-type sensor">Sensor</span>
         </div>
         <div class="card-body">
-          <img src="assets/sensors/fan 1.svg" alt="Vento" class="icon" />
+          <img src="assets/sensors/humidity.svg" alt="Vento" class="icon" >
           <div class="info">
-            <div class="value"><?php echo $valor_vento . " km/h"; ?></div>
-            <div class="subtext">Anemômetro</div>
+            <div class="value"><?php echo $valor_humidade . " %"; ?></div>
+            <div class="subtext">BME280</div>
           </div>
         </div>
         <div class="card-footer">
-          <small class="text-muted">Atualização:&nbsp;<?php echo $hora_vento?></small>
-          <a href="#" class="history-link">Ver histórico</a>
+          <small class="text-muted">Atualização:&nbsp;<?php echo $hora_humidade?></small>
+          <a href="index.php?page=history&sensor=humidade" class="history-link">Ver histórico</a>
         </div>
       </div>
     </div>
@@ -60,7 +60,7 @@
           <span class="badge-type sensor">Sensor</span>
         </div>
         <div class="card-body">
-          <img src="assets/sensors/uv 1.svg" alt="Índice UV" class="icon" />
+          <img src="assets/sensors/uv.svg" alt="Índice UV" class="icon" >
           <div class="info">
             <div class="value "><?php echo $valor_uv?></div>
             <div class="subtext">VEML6075</div>
@@ -68,7 +68,7 @@
         </div>
         <div class="card-footer">
           <small class="text-muted">Atualização:&nbsp;<?php echo $hora_uv?></small>
-          <a href="#" class="history-link">Ver histórico</a>
+          <a href="index.php?page=history&sensor=uv" class="history-link">Ver histórico</a>
         </div>
       </div>
     </div>
@@ -81,7 +81,7 @@
           <span class="badge-type actuator">Atuador</span>
         </div>
         <div class="card-body">
-          <img src="assets/sensors/led-light 1.svg" alt="LED" class="icon" />
+          <img src="assets/sensors/led-light.svg" alt="LED" class="icon" >
           <div class="info">
             <div class="value "><?php echo $valor_led?></div>
             <div class="subtext">WS2812</div>
@@ -89,7 +89,7 @@
         </div>
         <div class="card-footer">
           <small class="text-muted">Atualização:&nbsp;<?php echo $hora_led?></small>
-          <a href="#" class="history-link">Ver histórico</a>
+          <a href="index.php?page=history&sensor=led" class="history-link">Ver histórico</a>
         </div>
       </div>
     </div>
@@ -102,7 +102,7 @@
           <span class="badge-type actuator">Atuador</span>
         </div>
         <div class="card-body">
-          <img src="assets/sensors/servo 1.svg" alt="Servo" class="icon" />
+          <img src="assets/sensors/servo.svg" alt="Servo" class="icon" >
           <div class="info">
             <div class="value">
               <?php echo $valor_servo?>
@@ -112,7 +112,7 @@
         </div>
         <div class="card-footer">
           <small class="text-muted">Atualização:&nbsp;<?php echo $hora_servo?></small>
-          <a href="#" class="history-link">Ver histórico</a>
+          <a href="index.php?page=history&sensor=servo" class="history-link">Ver histórico</a>
         </div>
       </div>
     </div>
@@ -125,7 +125,7 @@
           <span class="badge-type actuator">Atuador</span>
         </div>
         <div class="card-body">
-          <img src="assets/sensors/alarm 1.svg" alt="Buzzer" class="icon" />
+          <img src="assets/sensors/alarm.svg" alt="Buzzer" class="icon" >
           <div class="info">
             <div class="value ">
               <?php echo $valor_buzzer?>
@@ -135,7 +135,7 @@
         </div>
         <div class="card-footer">
           <small class="text-muted">Atualização:&nbsp;<?php echo $hora_buzzer?></small>
-          <a href="#" class="history-link">Ver histórico</a>
+          <a href="index.php?page=history&sensor=buzzer" class="history-link">Ver histórico</a>
         </div>
       </div>
     </div>
@@ -160,7 +160,7 @@
           <tr>
             <td>
               <div class="d-flex align-items-center gap-3">
-                <img src="assets/sensors/high-temperature 1.svg" alt="Temperatura" width="32" />
+                <img src="assets/sensors/high-temperature.svg" alt="Temperatura" width="32" >
                 <span>Temperatura</span>
               </div>
             </td>
@@ -181,7 +181,7 @@
           <tr>
             <td>
               <div class="d-flex align-items-center gap-3">
-                <img src="assets/sensors/humidity 1.svg" alt="Humidade" width="32" />
+                <img src="assets/sensors/humidity.svg" alt="Humidade" width="32" >
                 <span>Humidade</span>
               </div>
             </td>
@@ -202,7 +202,7 @@
           <tr>
             <td>
               <div class="d-flex align-items-center gap-3">
-                <img src="assets/sensors/uv 1.svg" alt="Índice UV" width="32" />
+                <img src="assets/sensors/uv.svg" alt="Índice UV" width="32" >
                 <span>Índice UV</span>
               </div>
             </td>
@@ -223,7 +223,7 @@
           <tr>
             <td>
               <div class="d-flex align-items-center gap-3">
-                <img src="assets/sensors/led-light 1.svg" alt="LED" width="32" />
+                <img src="assets/sensors/led-light.svg" alt="LED" width="32" >
                 <span>LED RGB</span>
               </div>
             </td>
@@ -237,7 +237,7 @@
           <tr>
             <td>
               <div class="d-flex align-items-center gap-3">
-                <img src="assets/sensors/servo 1.svg" alt="Servo Motor" width="32" />
+                <img src="assets/sensors/servo.svg" alt="Servo Motor" width="32" >
                 <span>Servo Motor</span>
               </div>
             </td>
@@ -259,7 +259,7 @@
           <tr>
             <td>
               <div class="d-flex align-items-center gap-3">
-                <img src="assets/sensors/alarm 1.svg" alt="Buzzer" width="32" />
+                <img src="assets/sensors/alarm.svg" alt="Buzzer" width="32" >
                 <span>Buzzer 5V</span>
               </div>
             </td>

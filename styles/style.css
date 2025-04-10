@@ -235,7 +235,7 @@ main {
   color: #6a9cff;
 }
 
-.weather-card h1 {
+.weather-card .temp {
   font-size: 4.5rem;
   font-weight: 700;
   color: #0d2646;
@@ -632,7 +632,7 @@ section.bg-white h6 {
     font-size: 0.85rem;
   }
 
-  .weather-card h1 {
+  .weather-card .temp {
     font-size: 3rem;
   }
 
@@ -672,6 +672,7 @@ section.bg-white h6 {
     color: #8c8fa5;
     font-weight: 400;
   }
+
 
   .card-metric {
     flex-direction: column;

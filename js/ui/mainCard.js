@@ -6,7 +6,7 @@ window.updateMainCardValue = function (data) {
 
   const convertTemp = (temp) => (isCelsius ? Math.round(temp) : Math.round((temp * 9) / 5 + 32))
 
-  const el = document.querySelector('.weather-card h1')
+  const el = document.querySelector('.weather-card .temp')
   if (!el) return
 
   if (metric === 'Air temperature') {

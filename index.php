@@ -1,5 +1,5 @@
 <?php
-  $page = $_GET['page'] ?? 'dashboard';
+  $page = $_GET['page'] ?? 'dashboard';  // Página padrão
   $allowed = ['dashboard', 'sensors', 'history', 'contact'];
   if (!in_array($page, $allowed)) {
     $page = 'dashboard'; // fallback de segurança
@@ -9,30 +9,29 @@
 <!doctype html>
 <html lang="pt">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SkyCast</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
-    />
+    >
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
       rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles/global.css" />
-    <link rel="stylesheet" href="styles/style.css" />
-    <link rel="stylesheet" href="styles/sensors.css" />
-    <link rel="stylesheet" href="styles/history.css" />
-
-    <link rel="icon" type="image/x-icon" href="assets/other/favicon.svg" />
+    >
+    <link rel="stylesheet" href="styles/global.css" >
+    <link rel="stylesheet" href="styles/style.css" >
+    <link rel="stylesheet" href="styles/sensors.css" >
+    <link rel="stylesheet" href="styles/history.css">
+    <link rel="icon" type="image/x-icon" href="assets/other/favicon.svg" >
   </head>
   <body>
     <div class="app d-flex">
       <!-- Sidebar (desktop) -->
       <aside class="sidebar flex-column p-3" style="width: 250px">
         <div class="logo text-center mb-4">
-          <img src="assets/other/logo.svg" alt="Politécnico de Leiria" class="img-fluid" />
+          <img src="assets/other/logo.svg" alt="Politécnico de Leiria" class="img-fluid" >
         </div>
 
         <nav class="flex-grow-1">
@@ -103,7 +102,7 @@
         </div>
         <div class="offcanvas-body d-flex flex-column">
           <div class="logo mb-4">
-            <img src="assets/other/logo.svg" alt="Politécnico de Leiria" class="img-fluid" />
+            <img src="assets/other/logo.svg" alt="Politécnico de Leiria" class="img-fluid" >
           </div>
           <nav class="flex-grow-1">
             <ul class="nav flex-column">
@@ -193,7 +192,7 @@
                   type="text"
                   class="form-control ps-5 rounded-3 bg-light border-0 w-100"
                   placeholder="Search location here"
-                />
+                >
                 <ul
                   id="suggestions"
                   class="list-group position-absolute w-100 shadow-sm"
@@ -212,9 +211,10 @@
 
         <main id="main-content" class="flex-grow-1 overflow-auto">
           <section class="container-fluid">
+            <h2 class="warning d-none">iot</h2>
             <?php
               // Verifica se a página é 'sensors' ou 'history' e atribui a extensão correta
-              $extension = ($page === 'sensors' || $page === 'history') ? 'php' : 'html';
+              $extension = ($page === 'sensors' || $page === 'history' || $page === 'dashboard') ? 'php' : 'html';
               include "pages/$page.$extension";
             ?>
           </section>

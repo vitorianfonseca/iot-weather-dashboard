@@ -1,22 +1,23 @@
 <?php
+$selectedSensor = isset($_GET['sensor']) ? $_GET['sensor'] : 'temperatura';
 // Sensores e atuadores
 $dispositivos = [
-  'temperatura' => ['tipo' => 'Sensor', 'icon' => 'high-temperature 1.svg'],
-  'humidade' => ['tipo' => 'Sensor', 'icon' => 'humidity 1.svg'],
-  'uv' => ['tipo' => 'Sensor', 'icon' => 'uv 1.svg'],
-  'vento' => ['tipo' => 'Sensor', 'icon' => 'fan 1.svg'],
-  'led' => ['tipo' => 'Atuador', 'icon' => 'led-light 1.svg'],
-  'servo' => ['tipo' => 'Atuador', 'icon' => 'servo 1.svg'],
-  'buzzer' => ['tipo' => 'Atuador', 'icon' => 'alarm 1.svg'],
+  'temperatura' => ['tipo' => 'Sensor', 'icon' => 'high-temperature.svg'],
+  'humidade' => ['tipo' => 'Sensor', 'icon' => 'humidity.svg'],
+  'uv' => ['tipo' => 'Sensor', 'icon' => 'uv.svg'],
+  'led' => ['tipo' => 'Atuador', 'icon' => 'led-light.svg'],
+  'servo' => ['tipo' => 'Atuador', 'icon' => 'servo.svg'],
+  'buzzer' => ['tipo' => 'Atuador', 'icon' => 'alarm.svg'],
 ];
 
+// Função para gerar a tabela
 function gerarTabela($id, $tipo, $icon) {
   $log_path = __DIR__ . "/../api/files/{$id}/log.txt";
   if (!file_exists($log_path)) {
     return "<tr><td colspan='5'>⚠️ Ficheiro não encontrado: {$id}</td></tr>";
   }
 
-$linhas = array_reverse(file($log_path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES));
+  $linhas = array_reverse(file($log_path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES));
   $html = '';
 
   foreach ($linhas as $linha) {
@@ -28,16 +29,14 @@ $linhas = array_reverse(file($log_path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_
     $label = match($id) {
       'temperatura' => '°C',
       'humidade' => '%',
-      'vento' => 'km/h',
       default => '',
     };
 
     // Estado
     $estado = match($id) {
       'temperatura' => ($valor > 40 ? 'Elevado' : ($valor > 20 ? 'Normal' : 'Baixo')),
-      'humidade' => ($valor > 80 ? 'Humido' : ($valor > 40 ? 'Normal' : 'Seco')),
+      'humidade' => ($valor > 50 ? 'Humido' : ($valor > 30 ? 'Moderado' : 'Seco')),
       'uv' => ($valor > 7 ? 'Elevado' : ($valor > 4 ? 'Moderado' : 'Baixo')),
-      'vento' => ($valor > 20 ? 'Forte' : 'Suave'),
       'led' => ($valor == 'Ativo' ? 'Ativo' : 'Inativo'),
       'servo' => ($valor == 'Proteção ativa' ? 'Ativo' : 'Inativo'),
       'buzzer' => ($valor == 'Alerta ativo' ? 'Ativo' : 'Inativo'),
@@ -45,15 +44,15 @@ $linhas = array_reverse(file($log_path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_
     };
 
     $badge = match($estado) {
-      'Elevado', 'Humido', 'Inativo', 'Forte' => 'badge bg-danger-subtle text-danger-emphasis',
+      'Elevado', 'Humido', 'Inativo' => 'badge bg-danger-subtle text-danger-emphasis',
       'Normal', 'Moderado', 'Ativo' => 'badge bg-success-subtle text-success-emphasis',
-      'Baixo', 'Seco', 'Suave' => 'badge bg-primary-subtle text-primary-emphasis',
+      'Baixo', 'Seco' => 'badge bg-primary-subtle text-primary-emphasis',
       default => '',
     };
 
     $html .= "<tr>
       <td><div class='d-flex align-items-center gap-3'>
-        <img src='assets/sensors/{$icon}' alt='{$id}' width='32' />
+        <img src='assets/sensors/{$icon}' alt='{$id}' width='32' >
         <span>" . ucfirst($id) . "</span>
       </div></td>
       <td>{$tipo}</td>
@@ -65,6 +64,8 @@ $linhas = array_reverse(file($log_path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_
 
   return $html;
 }
+
+
 ?>
 
 <div class="history-page">
@@ -77,7 +78,7 @@ $linhas = array_reverse(file($log_path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_
         <li class="nav-item" role="presentation">
           <button class="nav-link <?= $i === 0 ? 'active' : '' ?>" id="tab-<?= $id ?>"
             data-bs-toggle="tab" data-bs-target="#pane-<?= $id ?>"
-            type="button" role="tab">
+            type="button" role="tab" onclick="openHistoryTab('<?= $id ?>')">
             <?= ucfirst($id) ?>
           </button>
         </li>
@@ -111,3 +112,18 @@ $linhas = array_reverse(file($log_path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_
     </div>
   </div>
 </div>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+  const selectedSensor = "<?php echo $selectedSensor; ?>";
+  const tabs = document.querySelectorAll(".nav-link"); // Ajusta se tiver outro seletor
+
+  tabs.forEach((tab) => {
+    if (tab.textContent.trim().toLowerCase() === selectedSensor.toLowerCase()) {
+      tab.click(); // Ativa a tab desejada
+    }
+  });
+});
+
+</script>
