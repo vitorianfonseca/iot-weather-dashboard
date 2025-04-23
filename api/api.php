@@ -1,61 +1,45 @@
 <?php
+// Define o tipo de conteúdo da resposta como HTML com codificação UTF-8
 header('Content-Type: text/html; charset=utf-8');
 
+// Verifica se a requisição foi feita por POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
+    // Verifica se os dados esperados foram enviados no POST
     if (isset($_POST['sensor'], $_POST['valor'], $_POST['hora'])) {
-        $sensor = $_POST['sensor'];
-        $valor = $_POST['valor'];
-        $hora = $_POST['hora'];
+        $sensor = $_POST['sensor']; // Nome do sensor enviado no POST
+        $valor = $_POST['valor'];   // Valor medido pelo sensor
+        $hora = $_POST['hora'];     // Hora da medição
 
-        // Caminhos para ficheiros
-        $dir = __DIR__ . "/files/$sensor";
-        $ficheiro_valor = "$dir/valor.txt";
-        $ficheiro_hora = "$dir/hora.txt";
-        $ficheiro_log = "$dir/log.txt";
+        // Define os caminhos dos ficheiros onde os dados serão armazenados
+        $dir = __DIR__ . "/files/$sensor"; // Diretório específico do sensor
+        $ficheiro_valor = "$dir/valor.txt"; // Ficheiro que guarda o último valor
+        $ficheiro_hora = "$dir/hora.txt";   // Ficheiro que guarda a última hora
+        $ficheiro_log = "$dir/log.txt";     // Ficheiro que guarda o histórico (log)
 
-        // Verifica se a pasta existe
+        // Cria o diretório do sensor se ainda não existir
         if (!is_dir($dir)) {
-            mkdir($dir, 0777, true); // Cria o diretório se não existir
+            mkdir($dir, 0777, true); // Cria com permissões totais e diretórios recursivos
         }
 
-        // Verifica se os arquivos podem ser gravados
+        // Verifica se o diretório é gravável antes de tentar escrever nos ficheiros
         if (is_writable($dir)) {
-            // Guarda os dados
+            // Guarda o valor e a hora nos respetivos ficheiros (substitui o conteúdo anterior)
             file_put_contents($ficheiro_valor, $valor);
             file_put_contents($ficheiro_hora, $hora);
 
-            // Acrescenta ao log.txt com quebra de linha
+            // Adiciona uma entrada no ficheiro de log com o formato "hora;valor"
             $linha_log = "$hora;$valor" . PHP_EOL;
-            file_put_contents($ficheiro_log, $linha_log, FILE_APPEND);
-
-            // Resposta
-            echo "Dados gravados com sucesso!";
+            file_put_contents($ficheiro_log, $linha_log, FILE_APPEND); // Acrescenta no final
         } else {
-            http_response_code(403); // Proibido
-            echo "Erro: Não foi possível gravar os dados.";
+            // Caso o diretório não possa ser escrito, imprime uma mensagem de erro
+            echo "Diretório não tem permissões de escrita.";
         }
     } else {
-        http_response_code(400); // Bad request
-        echo "Erro: parâmetros POST em falta.";
+        // Caso algum parâmetro esteja em falta, imprime uma mensagem de erro
+        echo "Parâmetros incompletos.";
     }
-}
-elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    if (isset($_GET['sensor'])) {
-        $sensor = $_GET['sensor'];
-        $ficheiro = __DIR__ . "/files/$sensor/valor.txt";
-
-        if (file_exists($ficheiro)) {
-            echo file_get_contents($ficheiro);
-        } else {
-            http_response_code(404); // Recurso não encontrado
-            echo "Erro: ficheiro \"$ficheiro\" não encontrado.";
-        }
-    } else {
-        http_response_code(400); // Bad request
-        echo "Erro: parâmetro GET 'sensor' em falta.";
-    }
-}
-else {
-    http_response_code(405); // Método não permitido
-    echo "Erro: apenas são suportados os métodos POST e GET.";
+} else {
+    // Rejeita requisições que não sejam do tipo POST
+    echo "Método não permitido.";
 }

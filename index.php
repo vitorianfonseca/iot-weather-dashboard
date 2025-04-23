@@ -1,4 +1,11 @@
 <?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("Location: auth/login.php");
+    exit();
+}
+// Se não houver utilizador autenticado, redirecionar para login
+
   $page = $_GET['page'] ?? 'dashboard';  // Página padrão
   $allowed = ['dashboard', 'sensors', 'history', 'contact'];
   if (!in_array($page, $allowed)) {

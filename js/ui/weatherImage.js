@@ -1,10 +1,10 @@
-// ui/weatherImage.js
-
+// BLOCO 1: Função global para atualizar a imagem do ícone do tempo
 window.updateWeatherImage = function (condition, isNight = false) {
   const weatherIcon = document.getElementById('weatherIcon')
-  if (!weatherIcon) return
-  weatherIcon.style.opacity = 0
+  if (!weatherIcon) return // Sai se o elemento não existir
+  weatherIcon.style.opacity = 0 // Oculta o ícone temporariamente durante a troca
 
+  // BLOCO 2: Mapeamento de condições meteorológicas para ícones diurnos
   const mapDay = {
     Clear: 'day.svg',
     Sunny: 'day.svg',
@@ -24,6 +24,7 @@ window.updateWeatherImage = function (condition, isNight = false) {
     Tornado: 'thunder.svg',
   }
 
+  // BLOCO 3: Mapeamento de condições meteorológicas para ícones noturnos
   const mapNight = {
     Clear: 'night.svg',
     Clouds: 'cloudy-night-2.svg',
@@ -42,12 +43,14 @@ window.updateWeatherImage = function (condition, isNight = false) {
     Tornado: 'thunder.svg',
   }
 
+  // BLOCO 4: Escolhe o ficheiro com base na condição e se é noite ou não
   const fileName = isNight
     ? mapNight[condition] || 'weather.svg'
     : mapDay[condition] || 'weather.svg'
 
+  // BLOCO 5: Atualiza o ícone no DOM com a nova imagem e descrição
   weatherIcon.src = `assets/weather/${fileName}`
   weatherIcon.alt = condition
   weatherIcon.className = 'weather-icon'
-  weatherIcon.style.opacity = 1
+  weatherIcon.style.opacity = 1 // Torna o ícone visível novamente
 }
