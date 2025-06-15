@@ -1,5 +1,5 @@
 <?php
-  $sensores = ['buzzer', 'led', 'servo', 'temperatura', 'uv', 'vento', 'humidade'];
+  $sensores = ['buzzer', 'led', 'servo', 'temperatura', 'uv', 'humidade'];
 
   foreach ($sensores as $sensor) {
     ${"valor_$sensor"} = file_get_contents("api/files/$sensor/valor.txt");
