@@ -120,3 +120,69 @@ td,
 th {
   padding: 10px 20px !important; /* Ajuste do padding das células */
 }
+
+
+.btn-atuador {
+  display: inline-block;
+  padding: 8px 18px;
+  margin: 6px 4px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #2563eb;
+  background-color: #e8f0fe;
+  border: none;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-atuador:hover {
+  background-color: #d4e3fc;
+  border-color: #b3cefc;
+}
+
+.led-indicator {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.led-circle {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.led-verde {
+  background-color: #4ade80;
+}
+
+.led-amarelo {
+  background-color: #facc15;
+}
+
+.led-vermelho {
+  background-color: #ef4444;
+}
+
+.btn-soft-blue {
+  background-color: #f0f6ff;
+  color: #2563eb; /* azul bonito */
+  border: none;
+  border-radius: 999px;
+  padding: 0.6rem 1.5rem;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: all 0.2s ease-in-out;
+  width: 100%;
+  text-align: center;
+}
+
+.btn-soft-blue:hover {
+  background-color: #dbeafe;
+  color: #1e40af;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}

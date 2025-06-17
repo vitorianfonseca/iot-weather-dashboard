@@ -33,7 +33,7 @@ if (!isset($_SESSION['username'])) {
     <link rel="stylesheet" href="styles/history.css">
     <link rel="icon" type="image/x-icon" href="assets/other/favicon.svg" >
   </head>
-  <body>
+  <?php echo "<body class='page-" . htmlspecialchars($page) . "'>"; ?>
     <div class="app d-flex">
       <!-- Sidebar (desktop) -->
       <aside class="sidebar flex-column p-3" style="width: 250px">

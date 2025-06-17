@@ -30,7 +30,7 @@ body > .d-flex {
 
 .sidebar {
   height: 100vh;
-  width: 16.75rem;
+  width: 12.75rem;
   background-color: #fff;
   display: flex;
   flex-direction: column;
@@ -374,7 +374,7 @@ main {
 .card-metric-overview {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.2rem;
   height: 100%;
   padding: 1.25rem;
   border: 1px solid #e8edf2;
@@ -383,14 +383,16 @@ main {
 }
 
 .card-metric-left-overview {
-  width: 3.75rem;
-  height: 3.75rem;
-  background-color: #fafafa;
+  width: clamp(44px, 4vw, 60px);
+  height: clamp(44px, 4vw, 60px);
+  background-color: #eef3fc;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
+
 
 .card-metric-right-overview {
   margin-left: 1rem;
@@ -745,3 +747,10 @@ section.bg-white h6 {
     scroll-snap-align: start;
   }
 }
+
+.card-metric-left-overview img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+

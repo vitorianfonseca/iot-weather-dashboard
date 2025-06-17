@@ -14,9 +14,11 @@ $dispositivos = [
 
 // BLOCO 3: Gera a tabela de histórico para um dispositivo específico
 function gerarTabela($id, $tipo, $icon) {
-  $log_path = __DIR__ . "/../api/files/{$id}/log.txt";
+  $tipo_pasta = strtolower($tipo); // 'Sensor' ou 'Atuador' → sensor ou atuador
+  $log_path = __DIR__ . "/../api/files/{$tipo_pasta}/{$id}/log.txt";
+
   if (!file_exists($log_path)) {
-    return "<tr><td colspan='5'>⚠️ Ficheiro não encontrado: {$id}</td></tr>";
+    return "<tr><td colspan='5'>⚠️ Ficheiro não encontrado: {$tipo_pasta}/{$id}/log.txt</td></tr>";
   }
 
   $linhas = array_reverse(file($log_path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES));
@@ -28,6 +30,7 @@ function gerarTabela($id, $tipo, $icon) {
 
   return $html;
 }
+
 
 // BLOCO 4: Processa cada linha do ficheiro de log para gerar uma linha da tabela
 function processLinha($linha, $id, $tipo, $icon) {
