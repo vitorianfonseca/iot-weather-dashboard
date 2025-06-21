@@ -194,30 +194,18 @@ foreach ($dispositivos as $nome => $info) {
       </div>
     </div>
 
-    <div class="control-card">
-      <form method="POST" action="api/api.php" class="d-flex justify-content-center">
-        <input type="hidden" name="comando" value="captura">
-        <button type="submit" class="btn-soft-blue">
-          Capturar Imagem
-        </button>
-      </form>
+    <div class="card" style="width: 100%; text-align: center; margin-top: 20px;">
+      <h3 style="margin-top: 10px;">📷 Última Captura</h3>
+      <img id="webcam" src="api/images/webcam.jpg?id=<?=time()?>" style="width: 100%; border-radius: 10px;" alt="Imagem da câmara">
+      <p style="font-size: 14px; color: #888; margin-top: 8px;">
+      <?php
+        $ficheiro = "api/images/webcam.jpg";
+        $dataImagem = file_exists($ficheiro) ? date("Y-m-d H:i:s", filemtime($ficheiro)) : "Sem imagem";
+        ?>
+        Atualização: <?= $dataImagem ?>
+        <!-- podes ajustar para mostrar a hora correta do ficheiro -->
+      </p>
     </div>
-
-    <?php
-      $base = "uploads/ultima";
-      $ext = file_exists("$base.jpg") ? "jpg" : (file_exists("$base.png") ? "png" : "");
-    ?>
-    <?php if ($ext): ?>
-      <img 
-        src="uploads/ultima.<?= $ext ?>?<?= time() ?>"
-        alt="Última captura"
-        class="img-fluid rounded shadow"
-        style="max-width: 500px;"
-      >
-    <?php else: ?>
-      <p class="text-muted">Nenhuma imagem disponível.</p>
-    <?php endif; ?>
-
 
 
   </div>
@@ -373,4 +361,15 @@ foreach ($dispositivos as $nome => $info) {
   .then(res => res.text())
   .then(data => alert("Comando enviado para " + atuador + ": " + valor));
 }
-  </script>
+
+  function atualizarImagemWebcam() {
+    const img = document.getElementById("webcam");
+    if (img) {
+      const timestamp = new Date().getTime();
+      img.src = `api/images/webcam.jpg?id=${timestamp}`;
+    }
+  }
+
+  // Atualiza a imagem a cada 5 segundos
+  setInterval(atualizarImagemWebcam, 5000);
+</script>

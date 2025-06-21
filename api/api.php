@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // 🔔 Ativa o buzzer automaticamente se o UV estiver elevado
         if ($sensor === 'uv') {
             $uv_num = floatval($valor);
-            $estado_buzzer = ($uv_num > 7) ? "ativo" : "inativo";
+            $estado_buzzer = ($uv_num > 8) ? "ativo" : "inativo";
             $dir_buzzer = __DIR__ . "/files/atuador/buzzer";
             if (!is_dir($dir_buzzer)) mkdir($dir_buzzer, 0777, true);
             file_put_contents("$dir_buzzer/valor.txt", $estado_buzzer);
@@ -59,8 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // ----- 🟩 Bloco: Atuador -----
     elseif (isset($_POST['atuador'], $_POST['valor'])) {
-        $dispositivo = $_POST['atuador'];
-        $estado = $_POST['valor'];
+        $atuador = $_POST['atuador'];
+        $valor = $_POST['valor'];
 
         $atuadores_validos = ['led', 'buzzer', 'servo'];
         if (!in_array($atuador, $atuadores_validos)) {
@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             file_put_contents($ficheiro_valor, $valor);
             file_put_contents($ficheiro_hora, $hora);
             file_put_contents($ficheiro_log, "$hora;$valor\n", FILE_APPEND);
-            echo "Estado do atuador $dispositivo atualizado com sucesso.";
+            echo "Estado do atuador $atuador atualizado com sucesso.";
         } else {
             echo "Diretório não tem permissões de escrita.";
         }

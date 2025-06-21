@@ -32,6 +32,7 @@ if (!isset($_SESSION['username'])) {
     <link rel="stylesheet" href="styles/sensors.css" >
     <link rel="stylesheet" href="styles/history.css">
     <link rel="icon" type="image/x-icon" href="assets/other/favicon.svg" >
+
   </head>
   <?php echo "<body class='page-" . htmlspecialchars($page) . "'>"; ?>
     <div class="app d-flex">
@@ -232,3 +233,9 @@ if (!isset($_SESSION['username'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
+
+<script>
+  setTimeout(() => {
+    location.reload();
+  }, 10000); // 5000 milissegundos = 5 segundos
+</script>
