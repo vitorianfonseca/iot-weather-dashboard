@@ -99,9 +99,9 @@ foreach ($dispositivos as $nome => $info) {
     
         <!-- Indicador LED RGB baseado na temperatura -->
         <div class="led-indicator d-flex justify-content-center gap-2 mt-2">
-          <div class="led-circle <?php if ($valor_temperatura < 20) echo 'led-verde'; ?>"></div>
-          <div class="led-circle <?php if ($valor_temperatura >= 20 && $valor_temperatura <= 40) echo 'led-amarelo'; ?>"></div>
-          <div class="led-circle <?php if ($valor_temperatura > 40) echo 'led-vermelho'; ?>"></div>
+          <div class="led-circle <?php if ($valor_temperatura < 25) echo 'led-verde'; ?>"></div>
+          <div class="led-circle <?php if ($valor_temperatura >= 25 && $valor_temperatura <= 40) echo 'led-amarelo'; ?>"></div>
+          <div class="led-circle <?php if ($valor_temperatura > 30) echo 'led-vermelho'; ?>"></div>
         </div>
           </div>
         </div>
@@ -165,51 +165,43 @@ foreach ($dispositivos as $nome => $info) {
   <h4 class="fw-bold mb-4">Controlo de Atuadores</h4>
   <div class="row gy-4 gx-3">
 
-    <!-- Controlo LED -->
-    <div class="col-md-4">
+    <!-- LED Arduino -->
+    <div class="col-md-6">
       <div class="sensor-card text-center">
-        <h5 class="mb-3">LED RGB</h5>
-        <button class="btn-atuador" onclick="controlar('led', 'vermelho')">Vermelho</button>
-        <button class="btn-atuador" onclick="controlar('led', 'azul')">Azul</button>
-        <button class="btn-atuador" onclick="controlar('led', 'off')">Desligar</button>
+        <h5 class="mb-3">LED Arduino</h5>
+        <button class="btn-atuador" onclick="controlar('led_arduino', 'on')">Ligar</button>
+        <button class="btn-atuador" onclick="controlar('led_arduino', 'off')">Desligar</button>
       </div>
     </div>
 
-    <!-- Controlo Servo -->
-    <div class="col-md-4">
+    <!-- LED Raspberry -->
+    <div class="col-md-6">
       <div class="sensor-card text-center">
-        <h5 class="mb-3">Servo Motor</h5>
-        <button class="btn-atuador" onclick="controlar('servo', '0')">0°</button>
-        <button class="btn-atuador" onclick="controlar('servo', '90')">90°</button>
-        <button class="btn-atuador"  onclick="controlar('servo', '180')">180°</button>
+        <h5 class="mb-3">LED Raspberry</h5>
+        <button class="btn-atuador" onclick="controlar('led_raspberry', 'on')">Ligar</button>
+        <button class="btn-atuador" onclick="controlar('led_raspberry', 'off')">Desligar</button>
       </div>
     </div>
 
-    <!-- Controlo Buzzer -->
-    <div class="col-md-4">
-      <div class="sensor-card text-center">
-        <h5 class="mb-3">Buzzer</h5>
-        <button class="btn-atuador" onclick="controlar('buzzer', 'ativo')">Ativar</button>
-        <button class="btn-atuador" onclick="controlar('buzzer', 'inativo')">Desativar</button>
-      </div>
-    </div>
-
+    <!-- Última Captura -->
     <div class="card" style="width: 100%; text-align: center; margin-top: 20px;">
       <h3 style="margin-top: 10px;">📷 Última Captura</h3>
       <img id="webcam" src="api/images/webcam.jpg?id=<?=time()?>" style="width: 100%; border-radius: 10px;" alt="Imagem da câmara">
       <p style="font-size: 14px; color: #888; margin-top: 8px;">
-      <?php
+        <?php
         $ficheiro = "api/images/webcam.jpg";
-        $dataImagem = file_exists($ficheiro) ? date("Y-m-d H:i:s", filemtime($ficheiro)) : "Sem imagem";
+        date_default_timezone_set('Europe/Lisbon');
+        $dataImagem = file_exists($ficheiro)
+          ? date("Y-m-d H:i:s", filemtime($ficheiro))
+          : "Sem imagem";
         ?>
         Atualização: <?= $dataImagem ?>
-        <!-- podes ajustar para mostrar a hora correta do ficheiro -->
       </p>
     </div>
 
-
   </div>
 </section>
+
 
 <section class="container my-5">
   <h4 class="fw-bold mb-4">Tabela de Sensores e Atuadores</h4>
@@ -237,9 +229,9 @@ foreach ($dispositivos as $nome => $info) {
             <td><?php echo $valor_temperatura . " °C"; ?></td>
             <td><?php echo $hora_temperatura?></td>
             <td>
-                <?php if ($valor_temperatura > 40 ) {
+                <?php if ($valor_temperatura > 30 ) {
                     echo "<span class='badge bg-danger-subtle text-danger-emphasis'>Elevado</span>"; 
-                  } elseif ($valor_temperatura < 40 && $valor_temperatura > 20) {
+                  } elseif ($valor_temperatura < 30 && $valor_temperatura > 25) {
                     echo "<span class='badge bg-success-subtle text-success-emphasis'>Normal</span>";
                   } else {
                     echo "<span class='badge bg-primary-subtle text-primary-emphasis'>Baixo</span>";
@@ -337,30 +329,16 @@ foreach ($dispositivos as $nome => $info) {
   </div>
 </section>
 
-
-     <script>
-    // Save scroll position on scroll
-    window.addEventListener('scroll', function() {
-      localStorage.setItem('scrollPosition', window.scrollY);
-    });
-
-    // Restore scroll position on load
-    window.addEventListener('load', function() {
-      const savedScrollPosition = localStorage.getItem('scrollPosition');
-      if (savedScrollPosition !== null) {
-        window.scrollTo(0, savedScrollPosition);
-      }
-    });
-
-    function controlar(atuador, valor) {
-  fetch("api/api.php", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({ atuador, valor })
-  })
-  .then(res => res.text())
-  .then(data => alert("Comando enviado para " + atuador + ": " + valor));
-}
+<script>
+  function controlar(atuador, valor) {
+    fetch("api/api.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ atuador, valor })
+    })
+    .then(res => res.text())
+    .then(data => alert("Comando enviado para " + atuador + ": " + valor));
+  }
 
   function atualizarImagemWebcam() {
     const img = document.getElementById("webcam");
@@ -371,5 +349,21 @@ foreach ($dispositivos as $nome => $info) {
   }
 
   // Atualiza a imagem a cada 5 segundos
-  setInterval(atualizarImagemWebcam, 5000);
+  // setInterval(atualizarImagemWebcam, 5000);
+
+  // Guardar scroll ao mover
+  window.addEventListener('scroll', () => {
+    localStorage.setItem('scrollPositionSensors', window.scrollY);
+  });
+
+  // Restaurar scroll após carregamento completo
+  window.addEventListener('load', () => {
+    const savedScrollPosition = localStorage.getItem('scrollPositionSensors');
+    if (savedScrollPosition !== null) {
+      requestAnimationFrame(() => {
+        window.scrollTo(0, parseInt(savedScrollPosition));
+      });
+    }
+  });
 </script>
+

@@ -1,3 +1,5 @@
+<!-- //para adicionar uma nova pagina, adicionar o li, extension e allowed -->
+
 <?php
 session_start();
 if (!isset($_SESSION['username'])) {
@@ -7,7 +9,7 @@ if (!isset($_SESSION['username'])) {
 // Se não houver utilizador autenticado, redirecionar para login
 
   $page = $_GET['page'] ?? 'dashboard';  // Página padrão
-  $allowed = ['dashboard', 'sensors', 'history', 'contact'];
+  $allowed = ['dashboard', 'sensors', 'history', 'contact', 'api_data'];
   if (!in_array($page, $allowed)) {
     $page = 'dashboard'; // fallback de segurança
   }
@@ -77,8 +79,26 @@ if (!isset($_SESSION['username'])) {
                 <span class="d-none d-lg-inline ms-lg-2">History</span>
               </a>
             </li>
+
+            <!-- --------------------------------------- -->
+
+              <!-- <li class="nav-item">
+                <a
+                  id="link-api"
+                  data-page="api_data.php"
+                  class="nav-link d-flex flex-column flex-lg-row align-items-center <?= $page === 'api_data' ? 'active' : '' ?>"
+                  href="index.php?page=api_data"
+                >
+                  <i class="bi bi-diagram-3 fs-5 mb-1 mb-lg-0"></i>
+                  <span class="d-none d-lg-inline ms-lg-2">API</span>
+                </a>
+              </li> -->
+
+            <!-- --------------------------------------- -->
+
           </ul>
         </nav>
+
 
         <div class="logout mt-auto text-center text-lg-start">
           <small class="text-muted d-none d-lg-block mb-2">System</small>
@@ -222,7 +242,7 @@ if (!isset($_SESSION['username'])) {
             <h2 class="warning d-none">iot</h2>
             <?php
               // Verifica se a página é 'sensors' ou 'history' e atribui a extensão correta
-              $extension = ($page === 'sensors' || $page === 'history' || $page === 'dashboard') ? 'php' : 'html';
+              $extension = ($page === 'sensors' || $page === 'history' || $page === 'dashboard' || $page === 'api_data') ? 'php' : 'html';
               include "pages/$page.$extension";
             ?>
           </section>
@@ -235,7 +255,9 @@ if (!isset($_SESSION['username'])) {
 </html>
 
 <script>
-  setTimeout(() => {
-    location.reload();
-  }, 10000); // 5000 milissegundos = 5 segundos
+  // Substitui no teu index.php:
+    setTimeout(() => {
+      window.scrollTo(0, localStorage.getItem('scrollPositionSensors') || 0); // aplica o scroll guardado ANTES de recarregar
+      location.href = location.href; // força reload mantendo scroll manualmente
+    }, 10000);
 </script>

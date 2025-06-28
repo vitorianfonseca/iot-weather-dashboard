@@ -33,18 +33,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // 🟢 Atualiza automaticamente o servo com base na humidade
         if ($sensor === 'humidade') {
-            $humidade_num = floatval($valor); // valor em %
-            $angulo = intval($humidade_num * 1.8); // escala 0-100 → 0-180°
-
+            $humidade_num = floatval($valor);
+            $angulo = intval($humidade_num * 1.8); // 0–100% → 0–180°
             $dir_servo = __DIR__ . "/files/atuador/servo";
             if (!is_dir($dir_servo)) mkdir($dir_servo, 0777, true);
-
             file_put_contents("$dir_servo/valor.txt", $angulo);
             file_put_contents("$dir_servo/hora.txt", $hora);
             file_put_contents("$dir_servo/log.txt", "$hora;$angulo\n", FILE_APPEND);
         }
 
-        // 🔔 Ativa o buzzer automaticamente se o UV estiver elevado
+        // 🔔 Ativa buzzer se UV > 8
         if ($sensor === 'uv') {
             $uv_num = floatval($valor);
             $estado_buzzer = ($uv_num > 8) ? "ativo" : "inativo";
@@ -62,7 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $atuador = $_POST['atuador'];
         $valor = $_POST['valor'];
 
-        $atuadores_validos = ['led', 'buzzer', 'servo'];
+        // Inclui led_arduino e led_raspberry
+        $atuadores_validos = ['led', 'buzzer', 'servo', 'led_arduino', 'led_raspberry'];
         if (!in_array($atuador, $atuadores_validos)) {
             echo "Dispositivo inválido.";
             exit;
@@ -84,9 +83,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             echo "Diretório não tem permissões de escrita.";
         }
-
     }
 
+    // ----- 📸 Bloco: Captura de imagem
     elseif (isset($_POST['comando']) && $_POST['comando'] === 'captura') {
         $dir = __DIR__ . "/files/control";
         if (!is_dir($dir)) mkdir($dir, 0777, true);
@@ -95,30 +94,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         file_put_contents($ficheiro_comando, "captura\n$hora\n");
         echo "Comando de captura registado.";
     }
-    
 
-    // ----- 🔴 Caso nenhum dos dois tipos foi passado -----
+    // ----- ❌ Fallback
     else {
         echo "Parâmetros incompletos.";
     }
-
 }
+
 // ----- 🔵 Requisição GET -----
 elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     // 🟦 Sensor
     if (isset($_GET['sensor'])) {
         $sensor = $_GET['sensor'];
+        
         $dir = __DIR__ . "/files/sensor/$sensor";
         $ficheiro_valor = "$dir/valor.txt";
-        $ficheiro_hora = "$dir/hora.txt";
 
-        if (file_exists($ficheiro_valor) && file_exists($ficheiro_hora)) {
-            $valor = trim(file_get_contents($ficheiro_valor));
-            echo $valor;
+        if (file_exists($ficheiro_valor)) {
+            echo trim(file_get_contents($ficheiro_valor));
         } else {
             http_response_code(404);
-            echo "Erro: ficheiros não encontrados para o sensor '$sensor'.";
+            echo "Erro: ficheiro não encontrado para o sensor '$sensor'.";
         }
 
     // 🟩 Atuador
@@ -126,14 +123,12 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $atuador = $_GET['atuador'];
         $dir = __DIR__ . "/files/atuador/$atuador";
         $ficheiro_valor = "$dir/valor.txt";
-        $ficheiro_hora = "$dir/hora.txt";
 
-        if (file_exists($ficheiro_valor) && file_exists($ficheiro_hora)) {
-            $valor = trim(file_get_contents($ficheiro_valor));
-            echo $valor;
+        if (file_exists($ficheiro_valor)) {
+            echo trim(file_get_contents($ficheiro_valor));
         } else {
             http_response_code(404);
-            echo "Erro: ficheiros não encontrados para o atuador '$atuador'.";
+            echo "Erro: ficheiro não encontrado para o atuador '$atuador'.";
         }
 
     } else {
@@ -141,7 +136,8 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
         echo "Erro: parâmetro GET 'sensor' ou 'atuador' em falta.";
     }
 }
-// ----- ❌ Outros métodos HTTP -----
+
+// ----- 🚫 Outros métodos HTTP
 else {
     echo "Método não permitido.";
 }
